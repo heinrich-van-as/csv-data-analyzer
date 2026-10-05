@@ -1,0 +1,21 @@
+Load_ID,Date,Origin,Destination,Product,Quantity_tonnes,Distance_km,Status
+L001,2026-09-01,Bloemfontein,Kimberley,Maize,28,160,Delivered
+L002,2026-09-01,Bloemfontein,Welkom,Wheat,22,145,Delivered
+L003,2026-09-02,Kimberley,Bloemfontein,Maize,31,160,Delivered
+L004,2026-09-02,Bloemfontein,De Aar,Sunflower Seed,19,240,Delivered
+L005,2026-09-03,Welkom,Bloemfontein,Wheat,26,145,Pending
+L006,2026-09-03,Bloemfontein,Kroonstad,Maize,24,125,Delivered
+L007,2026-09-04,De Aar,Bloemfontein,Sunflower Seed,21,240,Delivered
+L008,2026-09-04,Bloemfontein,Upington,Maize,30,400,Delivered
+L009,2026-09-05,Kroonstad,Bloemfontein,Wheat,18,125,Cancelled
+L010,2026-09-05,Upington,Bloemfontein,Maize,27,400,Delivered
+L011,2026-09-06,Bloemfontein,Welkom,Maize,23,145,Delivered
+L012,2026-09-06,Welkom,Kimberley,Wheat,25,210,Pending
+L013,2026-09-07,Kimberley,De Aar,Maize,20,180,Delivered
+L014,2026-09-07,Bloemfontein,Kroonstad,Sunflower Seed,17,125,Delivered
+L015,2026-09-08,De Aar,Kimberley,Wheat,29,180,Delivered
+L016,2026-09-08,Bloemfontein,Upington,Sunflower Seed,16,400,Pending
+L017,2026-09-09,Kroonstad,Welkom,Maize,22,120,Delivered
+L018,2026-09-09,Kimberley,Bloemfontein,Wheat,24,160,Delivered
+L019,2026-09-10,Welkom,Bloemfontein,Maize,27,145,Delivered
+L020,2026-09-10,Bloemfontein,De Aar,Wheat,21,240,Delivered
