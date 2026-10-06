@@ -16,32 +16,45 @@ by progressively building a program capable of inspecting and eventually analysi
 - Perform basic analysis
 - Generate useful summaries/reports
 
-## Development Stages
+## Current Progress
 
-- Stage 1: Basic CSV inspection
-- Stage 2: Data structure and validation
-- Stage 3: Data-quality checks
-- Stage 4: Basic analysis
-- Stage 5: pandas implementation
-- Stage 6: Reporting
+### Stage 1 — Load the CSV
 
-## Technologies & Concepts
+The program opens the sample CSV file, reads its contents as text, and displays the data in the terminal.
 
-Initially:
+### Stage 2 — Understand and Search the Data
 
-- Python
-- CSV
-- File handling
-- Lists/dictionaries
-- Functions
-- Error handling
+The program now:
 
-Later:
+- Identifies the header and records
+- Separates records into individual fields
+- Represents each record as a dictionary
+- Stores all 20 records in a list of dictionaries
+- Allows the user to search for a record by Load ID
+- Handles differences in user input such as lowercase letters and extra spaces
+- Displays matching records in a more readable format
+- Gives the user a message when a Load ID cannot be found
 
+### Stage 3 — Data Validation
+
+Planned next:
+
+- Check for missing values
+- Check for duplicate records
+- Check for unexpected values
+- Validate numeric fields
+- Identify other data-quality problems
+
+### Future Stages
+
+The project will eventually include:
+
+- Basic data analysis
+- Functions and modular code
 - pandas
 - Data cleaning
-- Statistical analysis
-- Data visualization
+- Simple reporting
+- Improved user interaction
 
 ## License
 
