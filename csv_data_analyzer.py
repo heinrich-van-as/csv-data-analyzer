@@ -1,6 +1,8 @@
-import csv
+# import csv
 
-with open("sample_data.csv", "r") as file:
+
+
+with open("messy_sample_data.csv", "r") as file:
     data = file.read()
 # print()
 # print(data)
@@ -8,7 +10,7 @@ with open("sample_data.csv", "r") as file:
 
 lines = data.splitlines()
 # print()
-# print(lines
+# print(lines)
 # print()
 # print(type(data))
 # print()
@@ -24,6 +26,7 @@ records =  lines[1:]
 # print(type(records))
 
 header_fields = header.split(",")
+Load_index = header_fields.index("Load_ID") 
 # print(header_fields)
 # print(header_fields.index("Origin"))
 
@@ -43,6 +46,61 @@ for record in records:
     }
     records_as_dicts.append(record_dict)
 
+for record in records_as_dicts:
+    for key, value in record.items():
+        if value == "":
+            print(f"Missing value in {record['Load_ID']}: {key}")
+
+allowed_statuses = ["Delivered", "In Transit", "Pending", "Cancelled"]
+
+for record in records_as_dicts:
+    status = record["Status"]
+
+    if status not in allowed_statuses:
+        print(f"Unexpected status: {status} ({record['Load_ID']})")
+
+seen_ids = set()
+
+for record in records_as_dicts:
+    load_id = record["Load_ID"]
+
+    if load_id in seen_ids:
+        print(f"Duplicate Load ID found: {load_id}")
+
+    else:
+        seen_ids.add(load_id)
+
+for record in records_as_dicts:
+    quantity = record["Quantity_tonnes"]
+    distance = record["Distance_km"]
+
+    try:
+        quantity = float(quantity)
+        distance = float(distance)
+
+        if quantity <= 0:
+            print(f"Invalid quantity for {record['Load_ID']}: {record['Quantity_tonnes']}")
+
+        if distance <= 0:
+            print(f"Invalid quantity for {record['Load_ID']}: {record['Distance_km']}")
+
+    except ValueError:
+        print(f"Non-numeric value found in record: {record['Load_ID']}")
+
+from datetime import datetime
+
+for record in records_as_dicts:
+    date = record["Date"]
+
+    try:
+        datetime.strptime(date, "%Y-%m-%d")
+
+    except ValueError:
+        print(f"Invalid date in record {record['Load_ID']}: {date}")
+
+
+
+
 # print(records_as_dicts)
 # print(len(records_as_dicts))
 # print(records_as_dicts[15])
@@ -60,28 +118,28 @@ for record in records:
 # print("Records:", len(records))
 # print("Header Fields:", header_fields)
 
-search_id = input("Enter Load ID: ").strip().upper()
+# search_id = input("Enter Load ID: ").strip().upper()
 
-found = False
+# found = False
 
-for record in records_as_dicts:
-    if record["Load_ID"] == search_id:
-        print("----------------------------------------")
-        print("             LOAD RECORD")
-        print("----------------------------------------")
-        print(f"Load ID:       {record['Load_ID']}")
-        print(f"Date:          {record['Date']}")
-        print(f"Origin:        {record['Origin']}")
-        print(f"Destination:   {record['Destination']}")
-        print(f"Product:       {record['Product']}")
-        print(f"Quantity:      {record['Quantity_tonnes']} tonnes")
-        print(f"Distance:      {record['Distance_km']} km")
-        print(f"Status:        {record['Status']}")
-        print("----------------------------------------")
-        found = True
+# for record in records_as_dicts:
+#     if record["Load_ID"] == search_id:
+#         print("----------------------------------------")
+#         print("             LOAD RECORD")
+#         print("----------------------------------------")
+#         print(f"Load ID:       {record['Load_ID']}")
+#         print(f"Date:          {record['Date']}")
+#         print(f"Origin:        {record['Origin']}")
+#         print(f"Destination:   {record['Destination']}")
+#         print(f"Product:       {record['Product']}")
+#         print(f"Quantity:      {record['Quantity_tonnes']} tonnes")
+#         print(f"Distance:      {record['Distance_km']} km")
+#         print(f"Status:        {record['Status']}")
+#         print("----------------------------------------")
+#         found = True
 
-if not found:
-     print(f"Invalid Load ID: {search_id}. Please try again.")
+# if not found:
+#      print(f"Invalid Load ID: {search_id}. Please try again.")
 
 
 

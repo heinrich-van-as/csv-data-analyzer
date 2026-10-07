@@ -1,0 +1,21 @@
+Load_ID,Date,Origin,Destination,Product,Quantity_tonnes,Distance_km,Status
+L001,2026-01-02,Bloemfontein,Johannesburg,Maize,38,410,Delivered
+L002,2026-01-03,Welkom,Durban,Wheat,42,620,In Transit
+L003,2026-01-04,Bethlehem,Cape Town,Sunflower,35,1050,Delivered
+L004,2026-01-05,Bloemfontein,,Maize,31,410,Pending
+L005,2026-01-06,Kroonstad,Durban,Wheat,thirty,580,Delivered
+L006,2026-01-07,Welkom,Johannesburg,Maize,40,-25,In Transit
+L007,2026-01-08,Bethlehem,Cape Town,Sunflower,37,1050,Delievered
+L008,2026-01-09,Bloemfontein,Durban,Maize,44,620,Delivered
+L009,2026-01-10,Kroonstad,Johannesburg,Wheat,39,580,delivered
+L010,2026-01-11,Welkom,Cape Town,Sunflower,41,980,Pending
+L003,2026-01-12,Bethlehem,Durban,Maize,36,640,Delivered
+L012,2026-01-13,,Johannesburg,Wheat,33,580,In Transit
+L013,2026-01-14,Bloemfontein,Durban,Maize,38,620,Delivered
+L014,2026-99-45,Kroonstad,Cape Town,Sunflower,34,900,Pending
+L015,2026-01-16,Welkom,Johannesburg,Maize,-12,410,In Transit
+L016,2026-01-17,Bethlehem,Durban,Wheat,45,640,Cancelled
+L017,2026-01-18,Bloemfontein,Johannesburg,Maize,32,410,Banana
+L018,2026-01-19,Kroonstad,Cape Town,Sunflower,40,900,Delivered
+L019,2026-01-20,Welkom,Durban,Wheat,37,620,Delivered
+L020,2026-01-21,Bethlehem,Johannesburg,Maize,43,410,In Transit
