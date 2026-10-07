@@ -1,4 +1,5 @@
-# import csv
+import csv
+from datetime import datetime
 
 with open("messy_sample_data.csv", "r") as file:
     data = file.read()
@@ -117,22 +118,18 @@ def validation_quick_check():
             if quantity <= 0:
                 print(
                     f"Invalid quantity for {record['Load_ID']}: "
-                    f"{record['Quantity_tonnes']}"
-                )
+                    f"{record['Quantity_tonnes']}")
 
             if distance <= 0:
                 print(
                     f"Invalid distance for {record['Load_ID']}: "
-                    f"{record['Distance_km']}"
-                )
+                    f"{record['Distance_km']}")
 
         except ValueError:
             print(f"Non-numeric value found in record {record['Load_ID']}")
 
     # Check dates
     print("\nDate validation:")
-
-    from datetime import datetime
 
     for record in records_as_dicts:
         date = record["Date"]
@@ -145,6 +142,134 @@ def validation_quick_check():
 
     print("\n========== VALIDATION COMPLETE ==========")
 
+def clean_status_values():
+    print("\n========== CLEAN STATUS VALUES ==========")
+
+    corrections = {
+        "Delievered": "Delivered",
+        "delivered": "Delivered"
+        }
+
+    corrections_made = 0
+
+    for record in records_as_dicts:
+        status = record["Status"]
+
+        if status in corrections:
+            old_status = record["Status"]
+            new_status = corrections[status]
+
+            record["Status"] = new_status
+            corrections_made += 1
+
+            print(f"Corrected {record['Load_ID']}: {old_status} -> {new_status}.")
+
+    if corrections_made == 0:
+        print("No correctable status values were found.")
+
+    else:
+        print(f"\n{corrections_made} status value(s) corrected.")
+
+    print("========== STATUS CLEANING COMPLETE ==========")
+
+def review_missing_values():
+    print("\n========== MISSING VALUE REVIEW ==========")
+
+    missing_found = False
+
+    for record in records_as_dicts:
+        for key, value in record.items():
+            if value == "":
+                print(f"Missing value found in {key} for {record['Load_ID']}")
+
+                missing_found = True
+
+    if not missing_found:
+        print("No missing values found.")
+
+    print("========== MISSING VALUE REVIEW COMPLETE ==========")
+
+def clean_nummeric_values():
+    print("\n========== NUMERIC VALUE REVIEW ==========")
+
+    corrections_made = 0
+    problems_found = 0
+
+    for record in records_as_dicts:
+
+        # Check Quantity
+        try:
+            quantity = float(record["Quantity_tonnes"])
+
+            if quantity <= 0:
+                print(f"Invalid quantity for {record['Load_ID']}: "
+                      f"{record['Quantity_tonnes']}")
+
+                problems_found += 1
+
+            else:
+                record["Quantity_tonnes"] = quantity
+                corrections_made += 1
+
+        except ValueError:
+            print(f"Non-numeric quantity for {record['Load_ID']}: "
+                  f"{record['Quantity_tonnes']}")
+
+            problems_found += 1
+
+        # Check Distance
+        try:
+            distance = float(record["Distance_km"])
+
+            if distance <= 0:
+                print(
+                    f"Invalid distance for {record['Load_ID']}: "
+                    f"{record['Distance_km']}")
+                
+                problems_found += 1
+            else:
+                record["Distance_km"] = distance
+                corrections_made += 1
+
+        except ValueError:
+            print(
+                f"Non-numeric distance for {record['Load_ID']}: "
+                f"{record['Distance_km']}")
+            
+            problems_found += 1
+
+    print(f"\nValid numeric values converted: {corrections_made}")
+    print(f"Numeric problems found: {problems_found}")
+
+    print("========== NUMERIC REVIEW COMPLETE ==========")
+
+def review_invalid_dates():
+    print("\n========== DATE REVIEW ==========")
+
+    invalid_dates_found = 0
+
+    for record in records_as_dicts:
+        date = record["Date"]
+
+        try:
+            datetime.strptime(date, "%Y-%m-%d")
+
+        except ValueError:
+            print(
+                f"Invalid date for {record['Load_ID']}: "
+                f"{record['Date']}"
+            )
+            invalid_dates_found += 1
+
+    if invalid_dates_found == 0:
+        print("No invalid dates found.")
+
+    else:
+        print(f"\nInvalid dates found: {invalid_dates_found}")
+
+    print("========== DATE REVIEW COMPLETE ==========")
+        
+
 def main():
     while True:
         print("\n========================================")
@@ -152,6 +277,7 @@ def main():
         print("========================================")
         print("1. Look up Load ID")
         print("2. Validation Quick Check")
+        print("3. Clean Data")
         print("0. Quit")
         print("========================================")
 
@@ -162,6 +288,36 @@ def main():
 
         elif choice == "2":
             validation_quick_check()
+
+        elif choice == "3":
+            while True:
+                print("\n========== CLEAN DATA ==========")
+                print("1. Clean Status Values")
+                print("2. Review Missing Values")
+                print("3. Clean Numeric Values")
+                print("4. Review Invalid Dates")
+                print("0. Return to Main Menu")
+                print("================================")
+
+                clean_choice = input("Enter your choice: ").strip()
+
+                if clean_choice == "1":
+                    clean_status_values()
+
+                elif clean_choice == "2":
+                    review_missing_values()
+
+                elif clean_choice == "3":
+                    clean_nummeric_values()
+
+                elif clean_choice == "4":
+                    review_invalid_dates()
+
+                elif clean_choice == "0":
+                    break
+
+                else:
+                    print(f"Invalid choice ({clean_choice}). Please enter 1 or 0.")
 
         elif choice == "0":
             print()
