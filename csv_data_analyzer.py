@@ -1,7 +1,5 @@
 # import csv
 
-
-
 with open("messy_sample_data.csv", "r") as file:
     data = file.read()
 # print()
@@ -26,7 +24,7 @@ records =  lines[1:]
 # print(type(records))
 
 header_fields = header.split(",")
-Load_index = header_fields.index("Load_ID") 
+# Load_index = header_fields.index("Load_ID") 
 # print(header_fields)
 # print(header_fields.index("Origin"))
 
@@ -46,57 +44,137 @@ for record in records:
     }
     records_as_dicts.append(record_dict)
 
-for record in records_as_dicts:
-    for key, value in record.items():
-        if value == "":
-            print(f"Missing value in {record['Load_ID']}: {key}")
+def lookup_load():
+    search_id = input("Enter Load ID: ").strip().upper()
 
-allowed_statuses = ["Delivered", "In Transit", "Pending", "Cancelled"]
+    found = False
 
-for record in records_as_dicts:
-    status = record["Status"]
+    for record in records_as_dicts:
+        if record["Load_ID"] == search_id:
+            print("----------------------------------------")
+            print("             LOAD RECORD")
+            print("----------------------------------------")
+            print(f"Load ID:       {record['Load_ID']}")
+            print(f"Date:          {record['Date']}")
+            print(f"Origin:        {record['Origin']}")
+            print(f"Destination:   {record['Destination']}")
+            print(f"Product:       {record['Product']}")
+            print(f"Quantity:      {record['Quantity_tonnes']} tonnes")
+            print(f"Distance:      {record['Distance_km']} km")
+            print(f"Status:        {record['Status']}")
+            print("----------------------------------------")
+            found = True
 
-    if status not in allowed_statuses:
-        print(f"Unexpected status: {status} ({record['Load_ID']})")
+    if not found:
+        print(f"Invalid Load ID: {search_id}. Please try again.")
 
-seen_ids = set()
+def validation_quick_check():
+    print("\n========== VALIDATION QUICK CHECK ==========")
 
-for record in records_as_dicts:
-    load_id = record["Load_ID"]
+    # Check for missing values
+    print("\nMissing values:")
 
-    if load_id in seen_ids:
-        print(f"Duplicate Load ID found: {load_id}")
+    for record in records_as_dicts:
+        for key, value in record.items():
+            if value == "":
+                print(f"Missing value in {key} for {record['Load_ID']}")
 
-    else:
-        seen_ids.add(load_id)
+    # Check for unexpected statuses
+    print("\nUnexpected statuses:")
 
-for record in records_as_dicts:
-    quantity = record["Quantity_tonnes"]
-    distance = record["Distance_km"]
+    allowed_statuses = ["Delivered", "In Transit", "Pending", "Cancelled"]
 
-    try:
-        quantity = float(quantity)
-        distance = float(distance)
+    for record in records_as_dicts:
+        status = record["Status"]
 
-        if quantity <= 0:
-            print(f"Invalid quantity for {record['Load_ID']}: {record['Quantity_tonnes']}")
+        if status not in allowed_statuses:
+            print(f"Unexpected status in {record['Load_ID']}: {status}")
 
-        if distance <= 0:
-            print(f"Invalid quantity for {record['Load_ID']}: {record['Distance_km']}")
+    # Check for duplicate Load IDs
+    print("\nDuplicate Load IDs:")
 
-    except ValueError:
-        print(f"Non-numeric value found in record: {record['Load_ID']}")
+    seen_ids = set()
 
-from datetime import datetime
+    for record in records_as_dicts:
+        load_id = record["Load_ID"]
 
-for record in records_as_dicts:
-    date = record["Date"]
+        if load_id in seen_ids:
+            print(f"Duplicate Load ID found: {load_id}")
+        else:
+            seen_ids.add(load_id)
 
-    try:
-        datetime.strptime(date, "%Y-%m-%d")
+    # Check numeric values
+    print("\nNumeric validation:")
 
-    except ValueError:
-        print(f"Invalid date in record {record['Load_ID']}: {date}")
+    for record in records_as_dicts:
+        quantity = record["Quantity_tonnes"]
+        distance = record["Distance_km"]
+
+        try:
+            quantity = float(quantity)
+            distance = float(distance)
+
+            if quantity <= 0:
+                print(
+                    f"Invalid quantity for {record['Load_ID']}: "
+                    f"{record['Quantity_tonnes']}"
+                )
+
+            if distance <= 0:
+                print(
+                    f"Invalid distance for {record['Load_ID']}: "
+                    f"{record['Distance_km']}"
+                )
+
+        except ValueError:
+            print(f"Non-numeric value found in record {record['Load_ID']}")
+
+    # Check dates
+    print("\nDate validation:")
+
+    from datetime import datetime
+
+    for record in records_as_dicts:
+        date = record["Date"]
+
+        try:
+            datetime.strptime(date, "%Y-%m-%d")
+
+        except ValueError:
+            print(f"Invalid date in record {record['Load_ID']}: {date}")
+
+    print("\n========== VALIDATION COMPLETE ==========")
+
+def main():
+    while True:
+        print("\n========================================")
+        print("           CSV DATA ANALYZER")
+        print("========================================")
+        print("1. Look up Load ID")
+        print("2. Validation Quick Check")
+        print("0. Quit")
+        print("========================================")
+
+        choice = input("Enter your choice: ").strip()
+
+        if choice == "1":
+            lookup_load()
+
+        elif choice == "2":
+            validation_quick_check()
+
+        elif choice == "0":
+            print()
+            print("Exiting CSV Data Analyzer. Good bye.")
+            print()
+            break
+
+        else:
+            print()
+            print(f"Invalid choice ({choice}). Please enter a valid choice: 1, 2, or 0.")
+            print()
+
+main()
 
 
 
@@ -118,28 +196,7 @@ for record in records_as_dicts:
 # print("Records:", len(records))
 # print("Header Fields:", header_fields)
 
-# search_id = input("Enter Load ID: ").strip().upper()
 
-# found = False
-
-# for record in records_as_dicts:
-#     if record["Load_ID"] == search_id:
-#         print("----------------------------------------")
-#         print("             LOAD RECORD")
-#         print("----------------------------------------")
-#         print(f"Load ID:       {record['Load_ID']}")
-#         print(f"Date:          {record['Date']}")
-#         print(f"Origin:        {record['Origin']}")
-#         print(f"Destination:   {record['Destination']}")
-#         print(f"Product:       {record['Product']}")
-#         print(f"Quantity:      {record['Quantity_tonnes']} tonnes")
-#         print(f"Distance:      {record['Distance_km']} km")
-#         print(f"Status:        {record['Status']}")
-#         print("----------------------------------------")
-#         found = True
-
-# if not found:
-#      print(f"Invalid Load ID: {search_id}. Please try again.")
 
 
 
