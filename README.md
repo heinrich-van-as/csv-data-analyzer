@@ -35,26 +35,48 @@ The program now:
 - Displays matching records in a more readable format
 - Gives the user a message when a Load ID cannot be found
 
-### Stage 3 — Data Validation
+### Stage 3 — Data Validation and Interactive Application
+
+The program can now perform several data-quality checks:
+
+Check for missing values
+Check for unexpected status values
+Check for duplicate Load IDs
+Validate numeric fields
+Validate dates
+Identify different types of data-quality problems in a deliberately messy dataset
+
+The validation system has been integrated into an interactive command-line application.
+
+The current menu allows the user to:
+
+Look up a Load ID
+Run a Validation Quick Check
+Quit the program
+
+The program uses functions and a while loop to allow the user to perform multiple operations during the same session.
+
+Stage 4 — Data Cleaning
 
 Planned next:
 
-- Check for missing values
-- Check for duplicate records
-- Check for unexpected values
-- Validate numeric fields
-- Identify other data-quality problems
-
-### Future Stages
+Identify which problems can be safely corrected automatically
+Standardise inconsistent values
+Handle missing and invalid data appropriately
+Investigate duplicate records
+Preserve the original dataset
+Create and verify a cleaned dataset
+Future Stages
 
 The project will eventually include:
 
-- Basic data analysis
-- Functions and modular code
-- pandas
-- Data cleaning
-- Simple reporting
-- Improved user interaction
+Basic data analysis
+Functions and modular code
+pandas
+Data cleaning
+Simple reporting
+Improved user interaction
+Potentially generating reports from the analysed data
 
 ## License
 
